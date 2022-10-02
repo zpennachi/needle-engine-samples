@@ -1,0 +1,83 @@
+<html>
+
+<head>
+  <title>My First Needle Web Page</title>
+  <meta charset="UTF-8" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- importmap -->
+  <script type="importmap">
+      {
+        "imports": {
+          "three":  "https://unpkg.com/three/build/three.module.js",
+          "three/": "https://unpkg.com/three/"
+        }
+      }
+  </script>
+  <!-- parcel require must currently defined somewhere for peerjs -->
+  <script> var parcelRequire; </script>
+  <!-- loading the needle engine js file -->
+  <script type="module" src="https://unpkg.com/@needle-tools/engine"></script>
+  <!-- loading the threejs file for interacting -->
+  <script type="module" src="https://unpkg.com/three"></script>
+</head>
+
+<body>
+  <!-- load a gltf or glb here as your scene and listen to the finished event to start interacting with it -->
+  <needle-engine src="scene.glb" loadfinished="onLoaded"></needle-engine>
+</body>
+<script>
+  function onLoaded(context) {
+    // get the scene from the needle-engine context
+    // the context gives you access to everything you need
+    const scene = context.scene;
+
+    // lets make the cube interactive
+    const cube = scene.getObjectByName("Cube");
+    if (cube) {
+      console.log("Add ObjectRaycaster and DragControls to", cube)
+      Needle.addNewComponent(cube, Needle.ObjectRaycaster);
+      Needle.addNewComponent(cube, Needle.DragControls);
+    }
+
+    // a timeout just to make the change visible
+    setTimeout(() => {
+
+      const renderer = Needle.getComponent(cube, Needle.Renderer);
+      renderer.material.color = new THREE.Color(0xff0000);
+      renderer?.startCoroutine(onCubeRendererUpdate.bind(renderer)());
+
+
+      const remoteSkybox = Needle.findObjectOfType(Needle.RemoteSkybox);
+      if (remoteSkybox) {
+        remoteSkybox.setSkybox("https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/1k/abandoned_bakery_1k.exr");
+      }
+
+    }, 2000);
+
+  }
+  /* 
+  this is a generator function. 
+  You can subscribe to certain events in the needle event loop for each component
+  */
+  function* onCubeRendererUpdate() {
+    while (this.enabled) {
+      // this is called every frame, we want
+      console.log("HI CUBE", this.context.time.frameCount, this);
+
+      if (this.context.time.frameCount > 500) {
+        this.enabled = false;
+        console.log("Bye CUBE", this);
+      }
+      
+      // wait for 30 frames
+      for (let i = 0; i < 30; i++)
+        yield;
+    }
+  }
+</script>
+
+</html>
