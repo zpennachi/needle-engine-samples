@@ -589,6 +589,7 @@ GameObject:
   - component: {fileID: 1304739365}
   - component: {fileID: 1304739366}
   - component: {fileID: 1304739367}
+  - component: {fileID: 1304739368}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -698,9 +699,25 @@ MonoBehaviour:
     $ GlobalObjectId_V1-2-88c70ed8749525542ad14663bc4b7f65-1304739367-0
   spline: {fileID: 1304739366}
   object: {fileID: 1151510981}
-  speed: 0.2
+  position01: 0
   lookAt: {fileID: 0}
   clamp: 0
+--- !u!111 &1304739368
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304739364}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d4894b325b7cec54b9758e3b05ab9bed, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d4894b325b7cec54b9758e3b05ab9bed, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1597275517
 GameObject:
   m_ObjectHideFlags: 0
