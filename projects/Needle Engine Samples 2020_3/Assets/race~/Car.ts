@@ -1,6 +1,7 @@
 import { Behaviour, GameObject, Rigidbody, serializable } from "@needle-tools/engine";
 import { KeyCode } from "@needle-tools/engine/engine/engine_input";
 import { Mathf } from "@needle-tools/engine/engine/engine_math";
+import { getWorldQuaternion } from "@needle-tools/engine/engine/engine_three_utils";
 import { Vector3 } from "three"
 
 export class Car extends Behaviour {
@@ -14,6 +15,9 @@ export class Car extends Behaviour {
     @serializable(Rigidbody)
     wheelsFront: Rigidbody[] = [];
 
+    @serializable(GameObject)
+    body!: GameObject;
+
     update() {
 
         if (this.context.input.isKeyPressed(KeyCode.KEY_W)) {
@@ -21,7 +25,7 @@ export class Car extends Behaviour {
                 const vel = wheel.getAngularVelocity();
                 // apply on world X axis
                 const axis = new Vector3(1,0,0);
-                axis.applyQuaternion(wheel.gameObject.quaternion);
+                axis.applyQuaternion(getWorldQuaternion(wheel.gameObject));
                 vel.addScaledVector(axis, -20 * this.context.time.deltaTime);
                 // vel.x -= 20 * this.context.time.deltaTime;
 
@@ -33,7 +37,7 @@ export class Car extends Behaviour {
                 const vel = wheel.getAngularVelocity();
                 // apply on world X axis
                 const axis = new Vector3(1,0,0);
-                axis.applyQuaternion(wheel.gameObject.quaternion);
+                axis.applyQuaternion(getWorldQuaternion(wheel.gameObject));
                 vel.addScaledVector(axis, 20 * this.context.time.deltaTime);
                 // vel.x += 20 * this.context.time.deltaTime;
 
@@ -49,7 +53,7 @@ export class Car extends Behaviour {
         }
 
 
-        if(this.context.input.isKeyPressed(KeyCode.KEY_A)) {
+        if(this.context.input.isKeyPressed(KeyCode.KEY_A)) { 
             // for(const wheel of this.wheelsFront) {
             //     const go = wheel.gameObject;
             //     go.rotateOnWorldAxis(new Vector3(0,1,0), .3 * this.context.time.deltaTime);
@@ -58,17 +62,27 @@ export class Car extends Behaviour {
             // }
             // const rot = this.frontAxis.rotation;
             // rot.y = Mathf.lerp(rot.y, Math.PI * .1, this.context.time.deltaTime / .2);
+
+            if(this.body){
+                const go = this.body;
+                go.rotateOnWorldAxis(new Vector3(0,1,0), 1 * this.context.time.deltaTime);
+            }
         }
         else if(this.context.input.isKeyPressed(KeyCode.KEY_D)) {
             // for(const wheel of this.wheelsFront) {
             //     const go = wheel.gameObject;
-            //     go.rotateOnWorldAxis(new Vector3(0,1,0), -.3 * this.context.time.deltaTime);
+            //     go.rotateOnWorldAxis(new Vector3(0,1,0), -1 * this.context.time.deltaTime);
             //     // const rot = wheel.gameObject.rotation;
             //     // rot.y = Mathf.lerp(rot.y, -Math.PI * .1, this.context.time.deltaTime / .2);
             // }
             // const rot = this.frontAxis.rotation;
             // rot.y = Mathf.lerp(rot.y, -Math.PI * .1, this.context.time.deltaTime / .2);
+            if(this.body){
+                const go = this.body;
+                go.rotateOnWorldAxis(new Vector3(0,1,0), -1 * this.context.time.deltaTime);
+            }
         }
+
     }
 
 }

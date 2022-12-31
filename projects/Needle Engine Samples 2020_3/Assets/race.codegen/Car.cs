@@ -10,6 +10,7 @@ namespace Needle.Typescript.GeneratedComponents
 		public UnityEngine.GameObject @frontAxis;
 		public UnityEngine.Rigidbody[] @wheels = new UnityEngine.Rigidbody[]{ };
 		public UnityEngine.Rigidbody[] @wheelsFront = new UnityEngine.Rigidbody[]{ };
+		public UnityEngine.GameObject @body;
 		public void update(){}
 	}
 }
