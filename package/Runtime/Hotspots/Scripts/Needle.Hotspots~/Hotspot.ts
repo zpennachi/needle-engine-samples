@@ -127,8 +127,9 @@ export class HotspotBehaviour extends Behaviour implements IPointerClickHandler 
             return;
 
         // use camera rotation directly
-        const camRotation = getWorldQuaternion(cam);
-        setWorldQuaternion(this.gameObject, camRotation);
+        // TODO use basic neck model
+        // const camRotation = getWorldQuaternion(cam);
+        // setWorldQuaternion(this.gameObject, camRotation);
         
         if (frame) {
             // TODO prevent roll in XR
@@ -149,8 +150,8 @@ export class HotspotBehaviour extends Behaviour implements IPointerClickHandler 
 
         // shift towards camera a bit
         const vectorTowardsCameraInGameObjectSpace = this.gameObject.worldToLocal(HotspotBehaviour._tempVector1.copy(cam.position)).normalize().multiplyScalar(this.zOffset);
-        if (this.shift) 
-            this.shift.position.set(vectorTowardsCameraInGameObjectSpace.x, vectorTowardsCameraInGameObjectSpace.y, vectorTowardsCameraInGameObjectSpace.z);
+        // if (this.shift) 
+        //    this.shift.position.set(vectorTowardsCameraInGameObjectSpace.x, vectorTowardsCameraInGameObjectSpace.y, vectorTowardsCameraInGameObjectSpace.z);
 
         // handle visiblity angle
         const camFwd = cam.getWorldDirection(HotspotBehaviour._tempVector1);
