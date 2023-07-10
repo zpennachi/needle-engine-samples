@@ -30,7 +30,7 @@ export class LightSwitch extends Interactable implements IPointerClickHandler {
     }
 
     onPointerClick() {
-        this._lightmap?.switchLight();
+        this._lightmap?.selectNext();
     }
 
     update() {
@@ -50,33 +50,34 @@ class LightmapSettings {
 //@dont-generate-component
 export class LightmapConfigurations extends Behaviour {
 
-    switchLight() {
-        this._didSwitchLightTime = Date.now();
-        this.index = this.currentIndex + 1;
-        this.context.connection.send("lightmap_index", this.currentIndex);
-    }
-
-    private _didSwitchLightTime?: number;
-
-    pingPong: boolean = false;
-
+    
     //@type System.Collections.Generic.List<UnityEngine.Texture2D>
     @serializeable(Texture)
     lightmaps?: Texture[];
-
+    
     @serializeable(LightmapSettings)
     settings?: LightmapSettings[];
+    
+    @serializeable()
+    autoSwitch: boolean = true;
 
-    set index(val: number) {
-        this.setLightmap(val);
-    }
+    @serializeable()
+    pingPong: boolean = false;
+
     get currentIndex(): number { return this._currentIndex; }
 
     private _intensities: { [key: string]: number } = {};
     private _forward: boolean = true;
     private _renderers: Renderer[] = [];
+    private _didSwitchLightTime?: number;
+
 
     awake() {
+        console.log(this.settings);
+
+        if(!this.autoSwitch)
+            this._didSwitchLightTime = Date.now();
+
         this.context.connection.beginListen("lightmap_index", (index: number) => {
             this._didSwitchLightTime = Date.now()
             this.setLightmap(index);
@@ -85,7 +86,7 @@ export class LightmapConfigurations extends Behaviour {
             this.context.connection.send("lightmap_sync", { index: this.currentIndex, switchTime: this._didSwitchLightTime });
         });
         this.context.connection.beginListen("lightmap_sync", (model: { index: number, switchTime: number }) => {
-            this.index = model.index;
+            this.setLightmap(model.index);
             this._didSwitchLightTime = model.switchTime;
         });
     }
@@ -94,7 +95,7 @@ export class LightmapConfigurations extends Behaviour {
         this.startCoroutine(this.switchLightmaps());
     }
 
-    *switchLightmaps() {
+    private *switchLightmaps() {
         this._renderers = GameObject.findObjectsOfType(Renderer);
         if(this._renderers.length <= 0){
             console.warn("No renderers found for LightmapConfigurations", this, Context.Current, ContextRegistry.Registered);
@@ -126,7 +127,7 @@ export class LightmapConfigurations extends Behaviour {
 
     private _currentIndex: number = -1;
 
-    private setLightmap(index: number) {
+    setLightmap(index: number) {
         if (typeof index !== "number") return;
         if (!this.lightmaps) return;
         index %= this.lightmaps.length;
@@ -138,6 +139,7 @@ export class LightmapConfigurations extends Behaviour {
             for (let k = 0; k < this.settings.length; k++) {
                 const settings = this.settings[k];
                 if (!settings.emissive) continue;
+                console.log(settings.emissive);
                 for (const rend of settings.emissive) {
                     this.disableRendererEmission(rend);
                 }
@@ -152,7 +154,9 @@ export class LightmapConfigurations extends Behaviour {
     }
 
     private disableRendererEmission(renderer: Renderer) {
+        console.log("disable emission", renderer);
         const mat = renderer.sharedMaterial;
+        console.log(mat);
         const cached = this._intensities[renderer.guid];
         if (!cached)
             this._intensities[renderer.guid] = mat["emissiveIntensity"];
@@ -164,5 +168,11 @@ export class LightmapConfigurations extends Behaviour {
         if (intensity === undefined) return;
         const mat = renderer.sharedMaterial;
         mat["emissiveIntensity"] = intensity;
+    }
+
+    selectNext() {
+        this._didSwitchLightTime = Date.now();
+        this.setLightmap(this.currentIndex + 1);
+        this.context.connection.send("lightmap_index", this.currentIndex);
     }
 }

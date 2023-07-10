@@ -10,7 +10,7 @@ namespace Needle.Typescript.GeneratedComponents
 	{
 		[Header("Synced to Runtime")] public List<LightmapSettings> settings = new List<LightmapSettings>();
 
-		public void OnBakedLightmap(LightmapBaker baker, Texture2D res, int index, int length)
+        public void OnBakedLightmap(LightmapBaker baker, Texture2D res, int index, int length)
 		{
 			if (this.lightmaps.Count != length)
 			{
@@ -48,19 +48,18 @@ namespace Needle.Typescript.GeneratedComponents
 	public partial class LightmapConfigurations : UnityEngine.MonoBehaviour
 	{
 		public List<UnityEngine.Texture2D> @lightmaps;
+        //public bool autoSwitch = true;
+		//public bool pingPong = false;
 
-		public void onEnable()
+        public void onEnable()
 		{
 		}
 
-		public void switchLightmaps()
-		{
-		}
+		//public void setLightmap(int index) { }
 
-		public void disableRendererEmission(UnityEngine.Renderer @renderer)
-		{
-		}
-	}
+		public void selectNext() { }
+
+    }
 }
 
 // NEEDLE_CODEGEN_END
