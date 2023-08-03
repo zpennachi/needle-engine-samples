@@ -20,6 +20,7 @@ namespace Needle
 		private static async void OnSceneOpened(Scene scene, OpenSceneMode mode)
 		{
 			await Task.Delay(200);
+			if (string.IsNullOrEmpty(scene.path)) return;
 			if (scene.path.Contains("com.needle.engine-samples") || scene.path.Contains("Samples/Needle"))
 			{
 				var dir = Path.GetDirectoryName(scene.path);
