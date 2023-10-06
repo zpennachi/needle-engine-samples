@@ -1965,7 +1965,7 @@ MonoBehaviour:
   controller: {fileID: 126150767}
   animator: {fileID: 86442264}
   movementSpeed: 0.5
-  rotationSpeed: 45
+  rotationSpeed: 10
   jumpForce: 0.5
   doubleJumpForce: 1
   lookForward: 1
@@ -4475,8 +4475,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Needle.Engine.Components.OrbitControls, Needle.Engine
     $ GlobalObjectId_V1-2-eac4dd0f2678cca419a5cb70efd54f74-706762907-0
+  enableRotate: 1
   autoRotate: 0
   autoRotateSpeed: 0.3
+  autoFit: 0
   enableKeys: 1
   enableDamping: 1
   dampingFactor: 0.1
@@ -4777,12 +4779,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Needle.Engine.ExportInfo, Needle.Engine.Common $ GlobalObjectId_V1-2-eac4dd0f2678cca419a5cb70efd54f74-784234923-0
   DirectoryName: Library/Needle/Sample
+  RemoteUrl: 
   AutoExport: 1
   Dependencies:
   - Name: samplescripts
     VersionOrPath: Packages/com.needle.sample-assets/Runtime/_Shared/SampleScripts.npmdef
     Guid: a54d66e790a1fe74b86cebd5eae8145d
-  - Name: samplescripts
+  - Name: '@needle-tools/samples-scripts'
     VersionOrPath: Packages/com.needle.engine-samples/Runtime/_Shared/SampleScripts.npmdef
     Guid: a54d66e790a1fe74b86cebd5eae8145d
   - Name: firstpersoncontroller
@@ -4944,7 +4947,7 @@ GameObject:
   - component: {fileID: 832101512}
   - component: {fileID: 832101515}
   - component: {fileID: 832101514}
-  - component: {fileID: 832101513}
+  - component: {fileID: 832101516}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -4967,19 +4970,6 @@ Transform:
   m_Father: {fileID: 2036857876}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &832101513
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832101511}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &832101514
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5029,6 +5019,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832101511}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &832101516
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832101511}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &857878658
 GameObject:
@@ -8214,6 +8218,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Needle.Typescript.GeneratedComponents.MobileControls,
     Needle.Engine-Samples.Runtime
   onlyMobile: 1
+  enableLook: 0
+  enableMove: 1
+  enableJump: 1
   movementSensitivity: 1
   lookSensitivity: 1
   maxDoubleTapDelay: 200
@@ -8235,20 +8242,7 @@ MonoBehaviour:
         m_CallState: 2
   onLook:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 126150768}
-        m_TargetAssemblyTypeName: Needle.Engine.Components.Experimental.CharacterControllerInput,
-          Needle.Engine
-        m_MethodName: look
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onMove:
     m_PersistentCalls:
       m_Calls:
@@ -8756,8 +8750,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.3981948, z: 1}
+  m_Center: {x: 0, y: 0.19909725, z: 0}
 --- !u!23 &1761637471
 MeshRenderer:
   m_ObjectHideFlags: 0

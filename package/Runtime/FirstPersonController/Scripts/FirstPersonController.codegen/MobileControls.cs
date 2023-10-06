@@ -8,6 +8,9 @@ namespace Needle.Typescript.GeneratedComponents
 	public partial class MobileControls : UnityEngine.MonoBehaviour
 	{
 		public bool @onlyMobile = true;
+		public bool @enableLook = true;
+		public bool @enableMove = true;
+		public bool @enableJump = true;
 		public float @movementSensitivity = 1f;
 		public float @lookSensitivity = 5f;
 		public float @maxDoubleTapDelay = 200f;

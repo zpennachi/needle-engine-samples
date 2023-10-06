@@ -5,6 +5,9 @@ import { Vector2 } from "three";
 export class MobileControls extends Behaviour {
 
     onlyMobile: boolean = true;
+    enableLook: boolean = true;
+    enableMove: boolean = true;
+    enableJump: boolean = true;
     movementSensitivity: number = 1;
     lookSensitivity: number = 5;
     maxDoubleTapDelay: number = 200;
@@ -71,48 +74,51 @@ export class MobileControls extends Behaviour {
         this._htmlElements.push(staticContainer);
 
         const pixelThreshold = 10;
-        this._movement = nipplejs.create({
-            mode: 'static',
-            position: { left: '50%', top: '50%' },
-            catchDistance: 1000,
-            zone: staticContainer,
-            size: 130,
-        });
-        this._movement.on('start', () => { this._movementIsActive = true; });
-        this._movement.on('move', (_, data) => {
-            if (data.distance > pixelThreshold)
-                this._movementVector.set(data.vector.x, data.vector.y).multiplyScalar(this.movementSensitivity);
-            else this._movementVector.set(0, 0);
-        });
-        this._movement.on('end', () => { this._movementIsActive = false; });
+        if(this.enableMove) {
+            this._movement = nipplejs.create({
+                mode: 'static',
+                position: { left: '50%', top: '50%' },
+                catchDistance: 1000,
+                zone: staticContainer,
+                size: 130,
+            });
+            this._movement.on('start', () => { this._movementIsActive = true; });
+            this._movement.on('move', (_, data) => {
+                if (data.distance > pixelThreshold)
+                    this._movementVector.set(data.vector.x, data.vector.y).multiplyScalar(this.movementSensitivity);
+                else this._movementVector.set(0, 0);
+            });
+            this._movement.on('end', () => { this._movementIsActive = false; });
+        }
 
 
         const fullRotationSpeedDistance = 130 / 2;
-        this._look = nipplejs.create({
-            mode: 'dynamic',
-            catchDistance: 1000,
-            maxNumberOfNipples: 1,
-            zone: dynamicContainer,
-            size: 130,
-            color: "#ffffff33",
-        });
-        this._look.on('start', () => { this._lookIsActive = true; });
-        this._look.on('move', (_, data) => {
-            if (data.distance > pixelThreshold)
-                this._lookVector.set(data.vector.x, data.vector.y * -1).multiplyScalar(this.lookSensitivity * data.distance / fullRotationSpeedDistance);
-            else this._lookVector.set(0, 0);
-        });
-        let lastLookEndTime: number = 0;
-        this._look.on('end', () => {
-            this._lookIsActive = false;
-            // double tap to jump:
-            const now = Date.now();
-            if (now - lastLookEndTime < this.maxDoubleTapDelay) {
-                this.onJump?.invoke();
-            }
-            lastLookEndTime = now;
-        });
-
+        if(this.enableLook) {
+            this._look = nipplejs.create({
+                mode: 'dynamic',
+                catchDistance: 1000,
+                maxNumberOfNipples: 1,
+                zone: dynamicContainer,
+                size: 130,
+                color: "#ffffff33",
+            });
+            this._look.on('start', () => { this._lookIsActive = true; });
+            this._look.on('move', (evt, data) => {
+                if (data.distance > pixelThreshold)
+                    this._lookVector.set(data.vector.x, data.vector.y * -1).multiplyScalar(this.lookSensitivity * data.distance / fullRotationSpeedDistance);
+                else this._lookVector.set(0, 0);
+            });
+            let lastLookEndTime: number = 0;
+            this._look.on('end', () => {
+                this._lookIsActive = false;
+                // double tap to jump:
+                const now = Date.now();
+                if (now - lastLookEndTime < this.maxDoubleTapDelay && this.enableJump) {
+                    this.onJump?.invoke();
+                }
+                lastLookEndTime = now;
+            });
+        }
     }
 
     onDisable(): void {
@@ -124,13 +130,12 @@ export class MobileControls extends Behaviour {
     }
 
     update() {
-        if (this._movementIsActive) {
+        if (this._movementIsActive && this.enableMove) {
             this.onMove?.invoke(this._movementVector);
         }
 
-        if (this._lookIsActive) {
+        if (this._lookIsActive && this.enableLook) {
             this.onLook?.invoke(this._lookVector);
         }
-
     }
 }
