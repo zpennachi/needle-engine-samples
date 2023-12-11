@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 458812339}
   - component: {fileID: 458812338}
   - component: {fileID: 458812337}
+  - component: {fileID: 458812340}
   m_Layer: 0
   m_Name: Export Info
   m_TagString: EditorOnly
@@ -337,8 +338,8 @@ MonoBehaviour:
   AutoExport: 1
   AutoCompress: 1
   Dependencies:
-  - Name: needle.materialx.samples
-    VersionOrPath: Packages/com.needle.engine-samples/Runtime/MaterialXNodes/Needle.MaterialX.Samples.npmdef
+  - Name: needle.samples.materialx
+    VersionOrPath: Packages/com.needle.engine-samples/Runtime/MaterialXNodes/Needle.Samples.MaterialX.npmdef
     Guid: d84a3d53f4e2142a5b412a246fb62181
 --- !u!4 &458812339
 Transform:
@@ -355,6 +356,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &458812340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458812336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032be61c99af4d068a11adffb37721ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Needle.Engine.Deployment.DeployToFTP, Needle.Engine.Deployment
+  FTPServer: {fileID: 11400000, guid: b302aecddeb36624eada38ec53765003, type: 2}
+  Path: /staging/materialx
+  OverrideGzipCompression: 1
+  UseGzipCompression: 0
 --- !u!1001 &784996343
 PrefabInstance:
   m_ObjectHideFlags: 0
