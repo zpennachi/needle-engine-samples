@@ -2,7 +2,7 @@ import { Behaviour, GameObject, ImageReference, Renderer, serializable } from "@
 import { LoadingManager } from "three";
 
 import { MaterialXLoader } from 'three/examples/jsm/loaders/MaterialXLoader.js';
-import { nodeFrame } from "three/examples/jsm/renderers/webgl/nodes/WebGLNodes";
+import { nodeFrame } from "three/examples/jsm/renderers/webgl-legacy/nodes/WebGLNodes";
 
 // Documentation → https://docs.needle.tools/scripting
 

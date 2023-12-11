@@ -1,6 +1,6 @@
 import { Behaviour, GameObject, LogType, Renderer, isDevEnvironment, showBalloonMessage } from '@needle-tools/engine';
 import { MeshPhysicalNodeMaterial, Swizzable, TimerNode, mx_noise_vec3, normalWorld, timerLocal } from "three/examples/jsm/nodes/nodes";
-import { nodeFrame } from "three/examples/jsm/renderers/webgl/nodes/WebGLNodes";
+import { nodeFrame } from "three/examples/jsm/renderers/webgl-legacy/nodes/WebGLNodes";
 
 export class ShadeWithMaterialX extends Behaviour {
     private timerNode?: Swizzable<TimerNode>;
