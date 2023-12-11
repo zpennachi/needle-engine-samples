@@ -1,5 +1,5 @@
 {
-  "name": "needle.materialx.samples",
+  "name": "needle.samples.materialx",
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {},
