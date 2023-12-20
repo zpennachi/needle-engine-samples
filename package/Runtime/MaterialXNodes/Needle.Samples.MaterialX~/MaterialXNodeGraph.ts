@@ -1,5 +1,5 @@
 import { Behaviour, GameObject, LogType, Renderer, isDevEnvironment, showBalloonMessage } from '@needle-tools/engine';
-import { MeshPhysicalNodeMaterial, Swizzable, TimerNode, mx_noise_vec3, normalWorld, timerLocal } from "three/examples/jsm/nodes/nodes";
+import { MeshPhysicalNodeMaterial, Swizzable, TimerNode, mx_noise_vec3, normalWorld, timerLocal } from "three/examples/jsm/nodes/Nodes.js";
 import { nodeFrame } from "three/examples/jsm/renderers/webgl-legacy/nodes/WebGLNodes";
 
 export class ShadeWithMaterialX extends Behaviour {
@@ -59,6 +59,7 @@ export class ShadeWithMaterialX extends Behaviour {
         nodeFrame.update();
     }
 
+    /*
     // The following is absolutely not needed – quick test to have an on-page REPL for the node graph
     private makeRepl() {
         const initialCode =
@@ -67,7 +68,6 @@ const offsetNode = timerLocal(1);
 this.timerNode = offsetNode;
 const customUV = normalWorld.mul( 10 ).add( offsetNode );
 const noiseNode = mx_noise_vec3( customUV );
-​
 // assign as colorNode for the PBR material
 material.colorNode = noiseNode;`;
         
@@ -114,4 +114,5 @@ material.colorNode = noiseNode;`;
             repl.innerText = initialCode;
         }
     }
+    */
 }

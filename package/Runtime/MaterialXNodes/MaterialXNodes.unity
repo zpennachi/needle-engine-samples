@@ -336,7 +336,7 @@ MonoBehaviour:
   DirectoryName: Library/Needle/Sample
   RemoteUrl: 
   AutoExport: 1
-  AutoCompress: 1
+  AutoCompress: 0
   Dependencies:
   - Name: needle.samples.materialx
     VersionOrPath: Packages/com.needle.engine-samples/Runtime/MaterialXNodes/Needle.Samples.MaterialX.npmdef
@@ -569,7 +569,7 @@ Transform:
   m_GameObject: {fileID: 920903795}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.23, y: -0.061, z: 0.278}
-  m_LocalScale: {x: 3.3776, y: 3.3776367, z: 3.3776367}
+  m_LocalScale: {x: 3.3776, y: 3.3776379, z: 3.3776379}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -755,7 +755,7 @@ Transform:
   m_GameObject: {fileID: 1069907841}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.206, y: -0.061, z: -0.231}
-  m_LocalScale: {x: 3.3776, y: 3.3776367, z: 3.3776367}
+  m_LocalScale: {x: 3.3776, y: 3.3776379, z: 3.3776379}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1102,7 +1102,7 @@ Transform:
   m_GameObject: {fileID: 1907323037}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.061, z: 0}
-  m_LocalScale: {x: 3.3776, y: 3.3776367, z: 3.3776367}
+  m_LocalScale: {x: 3.3776, y: 3.3776379, z: 3.3776379}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
