@@ -4,6 +4,7 @@
   "main": "index.ts",
   "dependencies": {},
   "peerDependencies": {
-	  "@needle-tools/engine": "^3.28.0-beta"
+	  "@needle-tools/engine": "file:/Users/herbst/git/needle-engine-dev/modules/needle-engine/js/package~",
+	  "three": "npm:@needle-tools/three@^0.154.3"
 	}
 }

@@ -69,7 +69,9 @@ export class MaterialXAsset extends Behaviour {
                         return firstMaterial;
                     });
 
-        renderer.sharedMaterial = material;
+        console.log('Loaded .mtlx material', material, path);
+        if (material)
+            renderer.sharedMaterial = material;
     }
 }
 
