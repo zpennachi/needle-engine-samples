@@ -4,22 +4,17 @@ import { Object3D, MathUtils } from "three";
 const debug = getParam("debuggyro");
 
 export class GyroscopeControls extends Behaviour {
-    @serializeable()
-    activateOnStart: boolean = true;
-
+    // better refresh rate, but not supported on all devices (supported on Android devices)
     protected sensorOrientation!: OrientationSensor;
+    // worse refresh rate, but supported on majority of devices (iOS and Android)
     protected deviceOrientation!: DeviceMotion;
 
     awake() {
         this.sensorOrientation = new OrientationSensor(this.gameObject);
-        this.deviceOrientation = new DeviceMotion(this.gameObject);    
-    
-        if(this.activateOnStart) {
-            this.activate();
-        }
+        this.deviceOrientation = new DeviceMotion(this.gameObject);
     }
 
-    activate() {
+    onEnable() {
         this.sensorOrientation.initialize((msg) => {
             if(debug) console.error("OrientationSensor: ", msg);
             this.deviceOrientation.initialize((msg) => {
@@ -29,7 +24,7 @@ export class GyroscopeControls extends Behaviour {
         });
     
     }
-    deactivate() {
+    onDisable() {
         this.sensorOrientation.disconnect();
         this.deviceOrientation.disconnect();
     }
