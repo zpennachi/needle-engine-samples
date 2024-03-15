@@ -53,9 +53,11 @@ export class MaterialXAsset extends Behaviour {
         };
         
         // Load compressed/uncompressed textures from the same glTF file this component is from.
+        console.log(this.sourceId);
         if (this.sourceId !== undefined) {
             const customLoader = new GLTFTextureLoader(this.sourceId, manager);
             manager.addHandler(/\.(jpg|png|exr|ktx2|webp)$/i, customLoader);
+            console.log("added custom handler", customLoader, this.sourceId)
         }
         
         const mtlxLoader = new MaterialXLoader(manager);
@@ -85,7 +87,7 @@ class GLTFTextureLoader extends Loader {
     }
 
     load(url: string): Texture {
-
+        console.log("custom loading:", url);
         const texture = new Texture();
         texture.name = url;
         if (!url) return texture;
@@ -120,13 +122,14 @@ class MaterialXTextureLoaderPlugin implements INeedleGLTFExtensionPlugin {
     }
 
     onImport(loader: GLTFLoader, sourceId: SourceIdentifier) {
+        console.log("yooo")
         loader.register(p => new MaterialXTextureLoaderGLTFCache(p, sourceId));
     }
 }
 
 class MaterialXTextureLoaderGLTFCache implements GLTFLoaderPlugin {
     get name(): string {
-        return "NEEDLE_materialx_texture_loader";
+        return "NEEDLE_materialx_texture_loader"; 
     }
 
     readonly parser: GLTFParser;
@@ -134,6 +137,7 @@ class MaterialXTextureLoaderGLTFCache implements GLTFLoaderPlugin {
     static readonly instances: Map<SourceIdentifier, GLTFParser> = new Map();
     
     constructor(parser: GLTFParser, sourceId: SourceIdentifier) {
+        console.log("constructing plugin")
         this.parser = parser;
         this.sourceId = sourceId;
         MaterialXTextureLoaderGLTFCache.instances.set(sourceId, parser);
@@ -144,4 +148,5 @@ class MaterialXTextureLoaderGLTFCache implements GLTFLoaderPlugin {
     beforeRoot() { return null; }
 }
 
+console.error("adding plugin")
 addCustomExtensionPlugin(new MaterialXTextureLoaderPlugin());
