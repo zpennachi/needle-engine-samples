@@ -1,10 +1,11 @@
-import { Behaviour, Context, GameObject, INeedleGLTFExtensionPlugin, ImageReference, Renderer, SourceIdentifier, addCustomExtensionPlugin, serializable } from "@needle-tools/engine";
+import { Behaviour, Context, GameObject, INeedleGLTFExtensionPlugin, ImageReference, NeedleEngine, Renderer, SourceIdentifier, addCustomExtensionPlugin, serializable } from "@needle-tools/engine";
 import { Loader, LoadingManager, Material, Texture } from "three";
 
 import { MaterialXLoader } from 'three/examples/jsm/loaders/MaterialXLoader.js';
 import { nodeFrame } from "three/examples/jsm/renderers/webgl-legacy/nodes/WebGLNodes";
 
 import { type GLTF, type GLTFLoaderPlugin, GLTFParser, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { ContextEvent } from "@needle-tools/engine";
 
 // Documentation → https://docs.needle.tools/scripting
 
@@ -150,3 +151,15 @@ class MaterialXTextureLoaderGLTFCache implements GLTFLoaderPlugin {
 
 console.error("adding plugin")
 addCustomExtensionPlugin(new MaterialXTextureLoaderPlugin());
+
+NeedleEngine.registerCallback(ContextEvent.ContextRegistered, (evt) => {
+    console.warn("ContextRegistered", evt);
+});
+
+NeedleEngine.registerCallback(ContextEvent.ContextCreationStart, (evt) => {
+    console.warn("ContextCreationStart", evt);
+});
+
+NeedleEngine.registerCallback(ContextEvent.ContextCreated, (evt) => {
+    console.warn("ContextCreated", evt);
+});
